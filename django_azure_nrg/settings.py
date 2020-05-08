@@ -60,13 +60,13 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',    
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'django_azure_nrg.urls'
@@ -105,7 +105,7 @@ INTERNAL_IPS = [
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'nrg-trading-db-django',
+        'NAME': 'nrg-trading-db',
         #'HOST': 'tcp:nrg-trading-srv.database.windows.net',
         'HOST': 'kapassle',
         'USER': 'trading-usr',
@@ -113,21 +113,36 @@ DATABASES = {
         'PORT': '',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
-        },        
-     },
-    'maindata': {
-        'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'nrg-trading-db',
-        'HOST': 'tcp:nrg-trading-srv.database.windows.net',
-        #'HOST': 'kapassle',
-        'USER': 'trading-usr',
-        'PASSWORD': 'Tr@d1ng!',
-        'PORT': '',
-        'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',
-        },        
+        },
      }
 }
+
+        
+##    'default': {
+##        'ENGINE': 'sql_server.pyodbc',
+##        'NAME': 'nrg-trading-db-django',
+##        #'HOST': 'tcp:nrg-trading-srv.database.windows.net',
+##        'HOST': 'kapassle',
+##        'USER': 'trading-usr',
+##        'PASSWORD': 'Tr@d1ng!',
+##        'PORT': '',
+##        'OPTIONS': {
+##            'driver': 'ODBC Driver 17 for SQL Server',
+##        },        
+##     },
+##    'maindata': {
+##        'ENGINE': 'sql_server.pyodbc',
+##        'NAME': 'nrg-trading-db',
+##        'HOST': 'tcp:nrg-trading-srv.database.windows.net',
+##        #'HOST': 'kapassle',
+##        'USER': 'trading-usr',
+##        'PASSWORD': 'Tr@d1ng!',
+##        'PORT': '',
+##        'OPTIONS': {
+##            'driver': 'ODBC Driver 17 for SQL Server',
+##        },        
+##     }
+##}
 
 
 ##DATABASES = {
@@ -194,6 +209,7 @@ if DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 
@@ -201,8 +217,6 @@ STATICFILES_DIRS = (
                     os.path.join(CURRENT_PATH, 'static'),
 )
 
-DATABASE_APPS_MAPPING = {'countries': 'maindata', 'scheduler': 'maindata'}
 
-
-
-DATABASE_ROUTERS = ['scheduler.routers.NrgAzureRouter']
+#DATABASE_APPS_MAPPING = {'countries': 'maindata', 'scheduler': 'maindata'}
+#DATABASE_ROUTERS = ['scheduler.routers.NrgAzureRouter']
