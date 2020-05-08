@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'debug_toolbar',
+#    'debug_toolbar',
     'extra_views',
-    'datetimewidget',
+#    'datetimewidget',
     'django_filters',
     'django_tables2',
     'django_bootstrap_breadcrumbs',
