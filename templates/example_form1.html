@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load staticfiles %}
+
+
+<!DOCTYPE html>
+<html lang="el" >
+
+{% block content %}
+
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+
+<script src="{% static 'bootstrap-3.1.1/js/jquery.js' %}"></script>
+<script src="{% static 'bootstrap-3.1.1/js/bootstrap.js' %}"></script>
+<script type="text/javascript" src="{% static 'bootstrap-3.1.1/js/moment.js' %}"></script>
+<script type="text/javascript" src="{% static 'bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js' %}"></script>
+{{ form.media }}
+<h2> {{  form.form_name }} </h2>
+
+<form role="form" action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+
+{% endblock %}
+
+

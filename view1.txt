@@ -1,0 +1,53 @@
+# This is an auto-generated Django model module.
+# You'll have to do the following manually to clean this up:
+#   * Rearrange models' order
+#   * Make sure each model has one field with primary_key=True
+#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+# Feel free to rename the models, but don't rename db_table values or field names.
+from django.db import models
+
+
+class View1(models.Model):
+    datetimeval = models.DateTimeField(db_column='DateTimeVal')  # Field name made lowercase.
+    country_id = models.IntegerField(db_column='Country_Id')  # Field name made lowercase.
+    countryft = models.BooleanField(db_column='CountryFT', blank=True, null=True)  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=50)  # Field name made lowercase.
+    abbr = models.CharField(db_column='Abbr', max_length=10)  # Field name made lowercase.
+    price = models.DecimalField(db_column='Price', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    atc_volume = models.DecimalField(db_column='ATC_Volume', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    price_forecast = models.DecimalField(db_column='Price_Forecast', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    price_actual = models.DecimalField(db_column='Price_Actual', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wav_consumption = models.DecimalField(db_column='WAV_Consumption', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wav_wind = models.DecimalField(db_column='WAV_Wind', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wav_pv = models.DecimalField(db_column='WAV_PV', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wav_nuclear = models.DecimalField(db_column='WAV_Nuclear', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wav_coal = models.DecimalField(db_column='WAV_Coal', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wav_lignite = models.DecimalField(db_column='WAV_Lignite', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wav_ccgt = models.DecimalField(db_column='WAV_CCGT', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wav_hydro = models.DecimalField(db_column='WAV_Hydro', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wfv_wind = models.DecimalField(db_column='WFV_Wind', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wfv_pv = models.DecimalField(db_column='WFV_PV', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wfv_nuclear = models.DecimalField(db_column='WFV_Nuclear', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wfv_coal = models.DecimalField(db_column='WFV_Coal', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wfv_lignite = models.DecimalField(db_column='WFV__Lignite', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase. Field renamed because it contained more than one '_' in a row.
+    wfv_ccgt = models.DecimalField(db_column='WFV_CCGT', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    mov_consumption = models.DecimalField(db_column='MOV_Consumption', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    mov_pv = models.DecimalField(db_column='MOV_PV', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    mov_wind = models.DecimalField(db_column='MOV_Wind', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    msv_consumption = models.DecimalField(db_column='MSV_Consumption', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    msv_wind = models.DecimalField(db_column='MSV_Wind', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    msv_pv = models.DecimalField(db_column='MSV_PV', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wfv_hydro = models.DecimalField(db_column='WFV_Hydro', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    whv_consumption = models.DecimalField(db_column='WHV_Consumption', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    whv_wind = models.DecimalField(db_column='WHV_Wind', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    whv_pv = models.DecimalField(db_column='WHV_PV', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    whv_hydro = models.DecimalField(db_column='WHV_Hydro', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    mfv_consumption = models.DecimalField(db_column='MFV_Consumption', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    mfv_wind = models.DecimalField(db_column='MFV_Wind', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    mfv_pv = models.DecimalField(db_column='MFV_PV', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wfv_consumption = models.DecimalField(db_column='WFV_Consumption', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = 'View_1'

@@ -1,0 +1,20 @@
+
+{% load i18n crispy_forms_tags %}
+
+{% block base_content %}<div class="row">
+    <div class="small-12 columns">
+        <h2>{% trans 'Crispy forms Foundation sample' %}</h2>
+        <h3 class="subheader">{% trans 'By form containers' %}</h3>
+        
+        {% comment %}{% with packages_versions=view.get_versions %}
+        <ul>
+            <li><small>django-crispy-forms=={{ packages_versions.django_crispy_forms }}</small></li>
+            <li><small>crispy-forms-foundation=={{ packages_versions.crispy_forms_foundation }}</small></li>
+        </ul>
+        {% endwith %}
+        <hr>{% endcomment %}
+        
+
+        {% crispy form %}
+    </div>
+</div>{% endblock %}

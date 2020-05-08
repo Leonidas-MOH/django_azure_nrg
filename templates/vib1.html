@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method=post action="">{% csrf_token %}
+<table>
+  {% for field in form %}
+    <tr>
+    <td>{{ field.name }}</td>
+    <td>{{ field }}</td>
+    <td>{{ field.label }}</td>
+    <td>{{ field.errors }}</td>
+    <td></td>
+    </tr>
+  {% endfor %}
+</table>
+<p><input type=submit value=Compute></form></p>
+
+<p>
+{% if result != None %}
+{% load static %}
+{% load staticfiles %}
+
+<img src="{% static result %}" width=500>
+{% endif %}
+</p>
+
+</body>
+</html>

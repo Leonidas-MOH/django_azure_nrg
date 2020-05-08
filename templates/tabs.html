@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load staticfiles %}
+
+
+{% block content1 %}
+//<![CDATA[
+{% block content %}
+
+<script type="text/javascript" src="{% static 'crispy_forms_foundation/plugins.js' %}"></script>
+        <div class="row">
+    <div class="small-12 columns">
+<script type="text/javascript">
+$(document).ready(function() {
+    $('form').abide_support_for_tabs();
+});
+</script>
+{% crispy form %}
+{% endblock %}
+{% endblock %}

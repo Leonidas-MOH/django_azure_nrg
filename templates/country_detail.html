@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+< html lang="el" >
+<head>
+<title>MedMOHApp administration | Django site admin</title>
+<link rel="stylesheet" type="text/css" href="/static/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/dashboard.css" />
+
+
+
+</head>
+{% block content %}
+
+
+
+
+
+<h1>{{'Χώρα'|ljust:"20" }}    {{ object.name}}</h1>
+<h2>{{'Συντ.'|ljust:"20" }}   {{ object.abbr }}</h2>
+<h2>{{'Επαρχεία της'|ljust:"20" }} {{ object.regionof.name }} </h2>
+<h2>{{'Διακίνηση'|ljust:"20" }}		 {{ object.countryft }} {{ object.country_from.name|ljust:"20" }} {{ object.country_to.name|ljust:"20"  }}</h2>
+
+<link rel="stylesheet" type="text/css" href="{% static "/admin/css/BasePlus.css" %}"/>
+
+{% endblock %}
+
