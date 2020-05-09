@@ -1,0 +1,74 @@
+{
+  "id": "/subscriptions/8d94340c-aeba-4356-be0f-f77e92c4252a/resourceGroups/nrg-trading/providers/Microsoft.Resources/deployments/Microsoft.Web-ASP-Portal-eb8ddafe-8a1a",
+  "name": "Microsoft.Web-ASP-Portal-eb8ddafe-8a1a",
+  "type": "Microsoft.Resources/deployments",
+  "tags": {
+    "primaryResourceId": "/subscriptions/8d94340c-aeba-4356-be0f-f77e92c4252a/resourcegroups/nrg-trading/providers/Microsoft.Web/serverFarms/nrg-trading-site-plan",
+    "marketplaceItemId": "Microsoft.AppServicePlanCreate"
+  },
+  "properties": {
+    "templateHash": "10586433546295542290",
+    "parameters": {
+      "name": {
+        "type": "String",
+        "value": "nrg-trading-site-plan"
+      },
+      "location": {
+        "type": "String",
+        "value": "West Europe"
+      },
+      "sku": {
+        "type": "String",
+        "value": "Basic"
+      },
+      "skucode": {
+        "type": "String",
+        "value": "B1"
+      },
+      "workerSize": {
+        "type": "String",
+        "value": "0"
+      },
+      "workerSizeId": {
+        "type": "String",
+        "value": "0"
+      },
+      "numberOfWorkers": {
+        "type": "String",
+        "value": "1"
+      },
+      "hostingEnvironment": {
+        "type": "String",
+        "value": ""
+      }
+    },
+    "mode": "Incremental",
+    "debugSetting": {
+      "detailLevel": "None"
+    },
+    "provisioningState": "Succeeded",
+    "timestamp": "2020-05-09T13:34:23.8236163Z",
+    "duration": "PT26.3044396S",
+    "correlationId": "02d8306f-4ef4-4e2a-82ae-c8a00b61889d",
+    "providers": [
+      {
+        "namespace": "Microsoft.Web",
+        "resourceTypes": [
+          {
+            "resourceType": "serverfarms",
+            "locations": [
+              "westeurope"
+            ]
+          }
+        ]
+      }
+    ],
+    "dependencies": [],
+    "outputResources": [
+      {
+        "id": "/subscriptions/8d94340c-aeba-4356-be0f-f77e92c4252a/resourceGroups/nrg-trading/providers/Microsoft.Web/serverfarms/nrg-trading-site-plan"
+      }
+    ],
+    "validationLevel": "Template"
+  }
+}

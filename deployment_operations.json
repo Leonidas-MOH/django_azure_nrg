@@ -1,0 +1,32 @@
+[
+  {
+    "id": "/subscriptions/8d94340c-aeba-4356-be0f-f77e92c4252a/resourceGroups/nrg-trading/providers/Microsoft.Resources/deployments/Microsoft.Web-ASP-Portal-eb8ddafe-8a1a/operations/8AAD91A2F17F4D2C",
+    "operationId": "8AAD91A2F17F4D2C",
+    "properties": {
+      "provisioningOperation": "Create",
+      "provisioningState": "Succeeded",
+      "timestamp": "2020-05-09T13:34:23.7233575Z",
+      "duration": "PT25.3897614S",
+      "trackingId": "4b56fc69-41ad-4cf8-a074-2868a4145d96",
+      "statusCode": "OK",
+      "targetResource": {
+        "id": "/subscriptions/8d94340c-aeba-4356-be0f-f77e92c4252a/resourceGroups/nrg-trading/providers/Microsoft.Web/serverfarms/nrg-trading-site-plan",
+        "resourceType": "Microsoft.Web/serverfarms",
+        "resourceName": "nrg-trading-site-plan"
+      }
+    }
+  },
+  {
+    "id": "/subscriptions/8d94340c-aeba-4356-be0f-f77e92c4252a/resourceGroups/nrg-trading/providers/Microsoft.Resources/deployments/Microsoft.Web-ASP-Portal-eb8ddafe-8a1a/operations/08586125756479584380",
+    "operationId": "08586125756479584380",
+    "properties": {
+      "provisioningOperation": "EvaluateDeploymentOutput",
+      "provisioningState": "Succeeded",
+      "timestamp": "2020-05-09T13:34:23.797877Z",
+      "duration": "PT0.040468S",
+      "trackingId": "76efe47d-19ca-47d9-8d11-42dddc4ca1e4",
+      "statusCode": "OK",
+      "statusMessage": null
+    }
+  }
+]
