@@ -52,7 +52,7 @@ EditComAction = 'edit'
 ViewComName = 'Προβολή'
 ViewComAction = 'view'
 
-ModelClassNameStr = 'Country'
+ModelClassNameStr = 'ScheduleLog'
 Model_Fields = ['datetime','description','task','scheduled_task','log','status']
 Table_Sequence = ['datetime','detail','...']
 Table_Exclude = ['id']
@@ -103,7 +103,7 @@ class CurrentTable(ExportMixin, tables.Table):
 
 
 @login_required
-@permission_required(f'{ModelClassName}.list_choice',raise_exception=True)
+@permission_required(f'scheduler.view_schedulelog',raise_exception=True)
 def DetailFiltered(request):
 
     data = ModelClassName.objects.all()
@@ -158,7 +158,7 @@ class Edit(PermissionRequiredMixin, UpdateView):
     
 
 class View(PermissionRequiredMixin , DetailView):
-    permission_required = f'{ModelClassName}.view_choice'
+    permission_required = f'scheduler.view_schedulelog'
     permission_denied_message = f'{ModelClassNameStr}'
 
     model = ModelClassName
