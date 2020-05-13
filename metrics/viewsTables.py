@@ -58,7 +58,7 @@ ViewComAction = 'view'
 
 ModelClassNameStr = 'Tables'
 Model_Fields = ['table_name','description']
-Table_Sequence = ['table_name','description','...']
+Table_Sequence = ['table_name','detail','detailed','description','...']
 Table_Exclude = ['id']
 Rows_Per_Page = 25
 
@@ -88,6 +88,7 @@ class CurrentForm(forms.ModelForm):
 
 class CurrentTable(ExportMixin, tables.Table):
     detail = tables.LinkColumn(PathStart+'view', args=[A('pk')], orderable=False, empty_values=[''])
+    detailed = tables.LinkColumn(PathStart+'edit', args=[A('pk')], orderable=False, empty_values=[''])    
     class Meta:
         model = ModelClassName
         row_attrs = {
@@ -101,10 +102,14 @@ class CurrentTable(ExportMixin, tables.Table):
     def render_detail(self, record):
         rev = reverse(PathStart+'view', kwargs={'pk': str(record.id)})
         return mark_safe('<a href=' + rev + f'><span style="color:red">{DefComName}</span></a>')
+    def render_detailed(self, record):
+        rev = reverse(PathStart+'edit', kwargs={'pk': str(record.id)})
+        return mark_safe('<a href=' + rev + f'><span style="color:green">{EditComName}</span></a>')
+
 
 
 @login_required
-@permission_required(f'{ModelClassName}.list_choice',raise_exception=True)
+@permission_required(f'{AppStr}.view_{ModelStr}',raise_exception=True)
 def DetailFiltered(request):
 
     data = ModelClassName.objects.all()
@@ -113,7 +118,7 @@ def DetailFiltered(request):
 
     export_format = request.GET.get("_export", None)
     if TableExport.is_valid_format(export_format):
-        exporter = TableExport(export_format, table ,exclude_columns = ("detail", ))
+        exporter = TableExport(export_format, table ,exclude_columns = ('detail','detailed' ))
         return exporter.response("table.{}".format(export_format))
     
 
@@ -145,7 +150,7 @@ class Create(PermissionRequiredMixin, CreateView):
 ##        return True
 
 class Edit(PermissionRequiredMixin, UpdateView):
-    permission_required = f'{ModelClassName}.edit_choice'
+    permission_required = f'{AppStr}.edit_{ModelStr}'
     permission_denied_message = f'{ModelClassNameStr}'
     
     model = ModelClassName
@@ -159,10 +164,15 @@ class Edit(PermissionRequiredMixin, UpdateView):
     
 
 class View(PermissionRequiredMixin , DetailView):
-    permission_required = f'{ModelClassName}.view_choice'
+    permission_required = f'{AppStr}.view_{ModelStr}'
     permission_denied_message = f'{ModelClassNameStr}'
 
     model = ModelClassName
     form_class = CurrentForm
     template_name = ModelStr+'_detail.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(self.__class__, self).get_context_data(*args, **kwargs)
+        context['form_name'] = FormName
+        return context
 

@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 #    'debug_toolbar',
-    'extra_views',
+#    'extra_views',
 #    'datetimewidget',
     'django_filters',
     'django_tables2',

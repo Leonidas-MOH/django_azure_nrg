@@ -31,58 +31,59 @@ from django.core.exceptions import ValidationError
 
 from django.http import HttpResponse
 
-from .models import Metric
+from .models import Scheduler
 
-class MetricForm(forms.ModelForm):
+ModelClassName = Scheduler
+
+
+class CurrentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(self.__class__, self).__init__(*args, **kwargs)
 
     class Meta:
-        model = Metric
-        fields = ['name','abbr','comments','metric_category','active','fieldto_0']
+        model = ModelClassName
+        fields = ['name','description']
 
 import django_filters
 
 
-class MetricFilter(django_filters.FilterSet):
+class CurrentFilter(django_filters.FilterSet):
     class Meta:
-        model = Metric
+        model = ModelClassName
         exclude = ('id',)
         fields = {
-            'name': ['exact', ],
-            'abbr': ['exact', ],
-            'metric_category': ['exact', ],
-            'fieldto_0': ['exact', ],
+            'name' : ['exact', ],
         }
 
 from django_tables2.utils import A
 
-class MetricTable(tables.Table):
-    detail = tables.LinkColumn('metric:edit', args=[A('pk')], orderable=False, empty_values=[''])    
+class CurrentTable(tables.Table):
+    detail = tables.LinkColumn('scheduler:scheduleredit', args=[A('pk')], orderable=False, empty_values=[''])    
     class Meta:
-        model = Metric
+        model = ModelClassName
         row_attrs = {
             'data-id': lambda record: record.pk
         }
         attrs = {'class': 'paleblue'}
         exclude = ['id']
-        sequence = ['name','detail','...']
+        sequence = ['name','description','...']
+        
 
     def render_detail(self, record):
         #rev = reverse('Home', kwargs={'pk': str(record.pk)})
         #rev = reverse('country:list', kwargs={'pk': str(record.pk)})
-        rev = reverse('metric:edit', kwargs={'pk': str(record.pk)})
+        rev = reverse('scheduler:scheduleredit', kwargs={'pk': str(record.pk)})
         return mark_safe('<a href=' + rev + u'><span style="color:red">Ενημέρωση</span></a>')
 
 
-def MetricsDetailFiltered(request):
+def DetailFiltered(request):
     if not request.user.is_authenticated:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
-    data = Metric.objects.all()
-    filter = MetricFilter(request.GET, queryset=data)
-    table = MetricTable(filter.qs)
+    data = ModelClassName.objects.all()
+    filter = CurrentFilter(request.GET, queryset=data)
+    table = CurrentTable(filter.qs)
 
     RequestConfig(request, paginate={'per_page': 15}).configure(table)
     return render(request, 'General/Generic_Table_view_filter_panel.html',
@@ -112,25 +113,25 @@ def Home0(request):
 
 
 #class CountryCreate(CreatePopupMixin,LoginRequiredMixin, UserPassesTestMixin, CreateView):
-class MetricsCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
-    model = Metric
-    form_class = MetricForm
+class Create(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = ModelClassName
+    form_class = CurrentForm
     template_name = 'General/General_cu_form.html'
 
     def test_func(self):
         return True
 
-class MetricsEdit(UpdateView):
-    model = Metric
-    form_class = MetricForm
+class Edit(UpdateView):
+    model = ModelClassName
+    form_class = CurrentForm
     template_name = 'General/General_cu_form.html'
 
     def test_func(self):
         return True
 
-class MetricView(DetailView):
-    model = Metric
-    form_class = MetricForm
+class View(DetailView):
+    model = ModelClassName
+    form_class = CurrentForm
     template_name = 'General/metrics_detail.html'
-    template_name = 'metrics_detail.html'
+    template_name = 'scheduledtask_detail.html'
 

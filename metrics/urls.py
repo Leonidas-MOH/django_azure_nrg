@@ -1,14 +1,20 @@
 from django.urls import path
-from . import views
+from . import viewsMetrics
 from . import viewsCategory
 from . import viewsTables
 from . import viewsFields
 
 urlpatterns = [
-    path('list/', views.MetricsDetailFiltered, name='list'),
-    path('add/', views.MetricsCreate.as_view(), name='add'),
-    path('edit/<int:pk>/', views.MetricsEdit.as_view(), name='edit'),
-    path('view/<int:pk>/', views.MetricView.as_view(), name='view'),
+    path('list/', viewsMetrics.DetailFiltered, name='list'),
+    path('add/', viewsMetrics.Create.as_view(), name='add'),
+    path('edit/<int:pk>/', viewsMetrics.Edit.as_view(), name='edit'),
+    path('view/<int:pk>/', viewsMetrics.View.as_view(), name='view'),
+
+    path('metricslist/', viewsMetrics.DetailFiltered, name='metricslist'),
+    path('metricsadd/', viewsMetrics.Create.as_view(), name='metricsadd'),
+    path('metricsedit/<int:pk>/', viewsMetrics.Edit.as_view(), name='metricsedit'),
+    path('metricsview/<int:pk>/', viewsMetrics.View.as_view(), name='metricsview'),
+
 
     path('tableslist/', viewsTables.DetailFiltered, name='tableslist'),
     path('tablesadd/', viewsTables.Create.as_view(), name='tablesadd'),

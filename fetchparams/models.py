@@ -42,7 +42,7 @@ class SpotDetNew(models.Model):
     tableto = models.CharField(db_column='TableTo', max_length=50)  # Field name made lowercase.
     insertminutes = models.IntegerField(db_column='InsertMinutes', blank=True, null=True)  # Field name made lowercase.
     daybefore = models.BooleanField(db_column='DayBefore')  # Field name made lowercase.
-    dayafter = models.BooleanField(db_column='DayAfter', blank=True, null=True)  # Field name made lowercase.
+    dayafter = models.BooleanField(db_column='DayAfter')  # Field name made lowercase.
 
     class Meta:
         managed = False

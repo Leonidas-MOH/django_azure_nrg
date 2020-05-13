@@ -8,6 +8,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
 # Add whitenoise middleware after the security middleware                             
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.security.SecurityMiddleware',    
     'django.contrib.sessions.middleware.SessionMiddleware',                      
     'django.middleware.common.CommonMiddleware',                                 
     'django.middleware.csrf.CsrfViewMiddleware',                                 

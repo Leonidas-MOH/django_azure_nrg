@@ -29,26 +29,22 @@ from django.forms import SplitDateTimeWidget
 from django.http import HttpResponse
 from django_tables2.utils import A
 
+from .models import Metric
+ModelClassName = Metric
 
-#######################
-from .models import MetricCategory
-
-ModelClassName = MetricCategory
-
-ModelStr = 'category'
+ModelStr = 'metrics'
 AppStr   = 'metric'
 
-PathStart = AppStr+':'+ModelStr 
+PathStart = AppStr+':'+ModelStr
 
-FormName  = 'Κατηγοτίες Μετρισήμων'
-PageTitle = 'Κ. Μετρισήμων'
+PageTitle = 'Metrics'
+FormName  = 'Metrics'
 
 DefComName = 'Προβολή'
 DefComAction = 'view'
 
-AltComName = 'Προθήκη'
-AltComAction = 'add'
-
+AltComName = 'Προβολή'
+AltComAction = 'view'
 
 AddComName = 'Προθήκη'
 AddComAction = 'add'
@@ -57,18 +53,15 @@ EditComAction = 'edit'
 ViewComName = 'Προβολή'
 ViewComAction = 'view'
 
-ModelClassNameStr = 'Metrics'
-Model_Fields = ['name','abbr','active']
-Table_Sequence = ['name','detail','detailed','abbr','active','...']
+ModelClassNameStr = 'metrics'
+Model_Fields = ['name','abbr','comments','metric_category','active','fieldto_0']
+Table_Sequence = ['name','detail','...']
 Table_Exclude = ['id']
 Rows_Per_Page = 25
 
 #--------------------------
 
 class CurrentFilter(django_filters.FilterSet):
-##    datetimeval = django_filters.DateTimeFromToRangeFilter(widget=SplitDateTimeWidget())
-##    datetimeval = django_filters.DateTimeFromToRangeFilter(widget=SplitDateTimeWidget(attrs={'type': 'date'}))
-##    datetimeval.label = 'Διάστημα'
     
     class Meta:
         model = ModelClassName
@@ -76,10 +69,9 @@ class CurrentFilter(django_filters.FilterSet):
         fields = {
             'name': ['exact', ],
             'abbr': ['exact', ],
+            'metric_category': ['exact', ],
+            'fieldto_0': ['exact', ],
         }
-
-
-
 
 #######################
 
@@ -94,7 +86,6 @@ class CurrentForm(forms.ModelForm):
 
 class CurrentTable(ExportMixin, tables.Table):
     detail = tables.LinkColumn(PathStart+'view', args=[A('pk')], orderable=False, empty_values=[''])
-    detailed = tables.LinkColumn(PathStart+'edit', args=[A('pk')], orderable=False, empty_values=[''])
     class Meta:
         model = ModelClassName
         row_attrs = {
@@ -108,9 +99,6 @@ class CurrentTable(ExportMixin, tables.Table):
     def render_detail(self, record):
         rev = reverse(PathStart+'view', kwargs={'pk': str(record.id)})
         return mark_safe('<a href=' + rev + f'><span style="color:red">{DefComName}</span></a>')
-    def render_detailed(self, record):
-        rev = reverse(PathStart+'view', kwargs={'pk': str(record.id)})
-        return mark_safe('<a href=' + rev + f'><span style="color:green">{AltComName}</span></a>')
 
 
 @login_required
@@ -132,14 +120,14 @@ def DetailFiltered(request):
                   {'objects': table,
                    'filter': filter,
                    'page_title': PageTitle,
-                   'form_name' : FormName,#})
-                   'param_action1_name': AltComName,
-                   'param_action1': reverse(PathStart+AltComAction),})
+                   'form_name' : FormName,})
+##                   'param_action1_name': AltComName,
+##                   'param_action1': reverse(PathStart+AltComAction),})
 
 
 #class Create(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 class Create(PermissionRequiredMixin, CreateView):
-    permission_required = f'{AppStr}.add_{ModelStr}'
+    permission_required = f'{AppStr}.add_{ModelStr}'    
     permission_denied_message = f'{ModelClassNameStr}'
 
     model = ModelClassName
@@ -169,7 +157,7 @@ class Edit(PermissionRequiredMixin, UpdateView):
     
 
 class View(PermissionRequiredMixin , DetailView):
-    permission_required = f'{AppStr}.view_{ModelStr}'
+    permission_required = f'{AppStr}.view_{ModelStr}'    
     permission_denied_message = f'{ModelClassNameStr}'
 
     model = ModelClassName
@@ -178,8 +166,7 @@ class View(PermissionRequiredMixin , DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(self.__class__, self).get_context_data(*args, **kwargs)
-        context['form_name'] = FormName
+        context['form_name'] = FormName 
         return context
     
-
 

@@ -59,7 +59,7 @@ ViewComAction = 'view'
 
 ModelClassNameStr = 'tasks'
 Model_Fields = ['name','url','code','active']
-Table_Sequence = ['name','detail','active','url','...']
+Table_Sequence = ['name','detail','detailed','active','url','...']
 Table_Exclude = ['id','code']
 Rows_Per_Page = 25
 
@@ -85,7 +85,8 @@ class CurrentForm(forms.ModelForm):
         fields = Model_Fields
 
 class CurrentTable(ExportMixin, tables.Table):
-    detail = tables.LinkColumn(PathStart+'view', args=[A('pk')], orderable=False, empty_values=[''])
+    detail   = tables.LinkColumn(PathStart+'view', args=[A('pk')], orderable=False, empty_values=[''])
+    detailed = tables.LinkColumn(PathStart+'edit', args=[A('pk')], orderable=False, empty_values=[''])    
     class Meta:
         model = ModelClassName
         row_attrs = {
@@ -99,10 +100,14 @@ class CurrentTable(ExportMixin, tables.Table):
     def render_detail(self, record):
         rev = reverse(PathStart+'view', kwargs={'pk': str(record.id)})
         return mark_safe('<a href=' + rev + f'><span style="color:red">{DefComName}</span></a>')
+    def render_detailed(self, record):
+        rev = reverse(PathStart+'edit', kwargs={'pk': str(record.id)})
+        return mark_safe('<a href=' + rev + f'><span style="color:green">{EditComName}</span></a>')
+
 
 
 @login_required
-@permission_required(f'{ModelClassName}.list_choice',raise_exception=True)
+@permission_required(f'{AppStr}.view_{ModelStr}',raise_exception=True)
 def DetailFiltered(request):
 
     data = ModelClassName.objects.all()
@@ -127,7 +132,7 @@ def DetailFiltered(request):
 
 #class Create(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 class Create(PermissionRequiredMixin, CreateView):
-    permission_required = f'{ModelClassName}.add_choice'
+    permission_required = f'{AppStr}.add_{ModelStr}'    
     permission_denied_message = f'{ModelClassNameStr}'
 
     model = ModelClassName
@@ -143,7 +148,7 @@ class Create(PermissionRequiredMixin, CreateView):
 ##        return True
 
 class Edit(PermissionRequiredMixin, UpdateView):
-    permission_required = f'{ModelClassName}.edit_choice'
+    permission_required = f'{AppStr}.edit_{ModelStr}'    
     permission_denied_message = f'{ModelClassNameStr}'
     
     model = ModelClassName
@@ -157,7 +162,7 @@ class Edit(PermissionRequiredMixin, UpdateView):
     
 
 class View(PermissionRequiredMixin , DetailView):
-    permission_required = f'{ModelClassName}.view_choice'
+    permission_required = f'{AppStr}.view_{ModelStr}'    
     permission_denied_message = f'{ModelClassNameStr}'
 
     model = ModelClassName

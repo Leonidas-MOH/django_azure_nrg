@@ -65,7 +65,8 @@ STATUS_CHOICES = (
 (0, 'Regular'),
 (1, 'Manager'),
 (2, 'Admin'),
-)
+)
+
 
 
 class CurrentFilter(django_filters.FilterSet):
@@ -137,7 +138,7 @@ class CurrentTable(ExportMixin, tables.Table):
 
 
 @login_required
-@permission_required(f'{ModelClassName}.list_choice',raise_exception=True)
+@permission_required(f'{AppStr}.view_{ModelStr}',raise_exception=True)
 def DetailFiltered(request):
 ##    if not request.user.is_authenticated:
 ##        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
@@ -157,14 +158,14 @@ def DetailFiltered(request):
                   {'objects': table,
                    'filter': filter,
                    'page_title': PageTitle,
-                   'form_name' : FormName,#})
-                   'param_action1_name': 'Προσθήκη',
-                   'param_action1': reverse('country:countryadd'),})
+                   'form_name' : FormName,})
+##                   'param_action1_name': 'Προσθήκη',
+##                   'param_action1': reverse('country:countryadd'),})
                    
 
 #class Create(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 class Create(PermissionRequiredMixin, CreateView):
-    permission_required = f'{ModelClassName}.add_choice'
+    permission_required = f'{AppStr}.add_{ModelStr}'
     permission_denied_message = f'{ModelClassNameStr}'
 
     model = ModelClassName
@@ -175,7 +176,7 @@ class Create(PermissionRequiredMixin, CreateView):
 ##        return True
 
 class Edit(PermissionRequiredMixin, UpdateView):
-    permission_required = f'{ModelClassName}.edit_choice'
+    permission_required = f'{AppStr}.edit_{ModelStr}'
     permission_denied_message = f'{ModelClassNameStr}'
     
     model = ModelClassName
@@ -187,7 +188,7 @@ class Edit(PermissionRequiredMixin, UpdateView):
 
 
 class View(PermissionRequiredMixin , DetailView):
-    permission_required = f'{ModelClassName}.view_choice'
+    permission_required = f'{AppStr}.view_{ModelStr}'
     permission_denied_message = f'{ModelClassNameStr}'
 
     model = ModelClassName

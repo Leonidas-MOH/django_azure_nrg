@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load render_table from django_tables2 %}
+
+<!DOCTYPE html>
+<html lang="en-us" >
+<head>
+</head>
+	{% if user.is_authenticated %}
+	<p>Welcone, {{ user.username }} </p>
+	{% else %}
+	<p>Welcome, new user. Please log in.</p>
+	{% endif %}
+
+<h1>{{ page_title }}  </h1>
+
+{% if main_url_leo %}
+	<li><a href={% url  main_url_leo  %}>Add</li>
+{% endif %}
+
+
+{% block title %}
+    {{ page_title }}
+{% endblock %}
+
+
+{% block content %}
+<html>
+    <h1> {{ form_name }} </h1>
+    <body>
+	<h1>metric_id   	: {{ object.metric_id }} </h1>
+	<h1>country_id  	: {{ object.country_id }} </h1>
+	
+	<h2>ftppath  	: {{ object.ftppath }} </h2>
+	<h2>filename  	: {{ object.filename }} </h2>
+	<h2>active  	: {{ object.active }} </h2>
+	<h2>insertminutes  	: {{ object.insertminutes }} </h2>
+	<h2>daybefore  	: {{ object.daybefore }} </h2>
+	<h2>dayafter  	: {{ object.dayafter }} </h2>
+	<h2>fieldname  	: {{ object.fieldname }} </h2>
+	
+	<h2>timefrom  	: {{ object.timefrom }} </h2>	
+	<h2>timeto  	: {{ object.timeto }} </h2>
+	<h2>timeselection  	: {{ object.timeselection }} </h2>
+	<h2>headerrow  	: {{ object.headerrow }} </h2>
+
+	
+	
+	
+    </body>
+	
+
+    {% if param_action1_name %}
+	<p><a href={{ param_action1 }} type="button" class="btn btn-lg btn-success"> {{ param_action1_name}} </a></p>
+    {% endif %}
+    {% if param_action2_name %}
+	<p><a href={{ param_action2 }} type="button" class="btn btn-lg btn-info"> {{ param_action2_name}} </a></p>
+    {% endif %}
+    {% if param_action3_name %}
+	<p><a href={{ param_action3 }} type="button" class="btn btn-lg btn-danger"> {{ param_action3_name}} </a></p>
+    {% endif %}
+    {% if param_action4_name %}
+	<p><a href={{ param_action4 }} type="button" class="btn btn-lg "> {{ param_action4_name}} </a></p>
+    {% endif %}
+
+</html>
+{% endblock %}
