@@ -32,6 +32,7 @@ from django_tables2.utils import A
 
 #######################
 from .models import UpdatedMC
+from metrics.models   import *
 
 ModelClassName = UpdatedMC
 ModelStr = 'updatedmc'
@@ -78,11 +79,11 @@ class CurrentFilter(django_filters.FilterSet):
 
     #country_id = django_filters.NumberFilter(method='country_id')
 
-    aaa=Country.objects.filter(countryft=1)
-    ccc=[]
-    for x in aaa.values():
-        print(x['id'],x['name'])
-        ccc.append((int(x['id']),x['name'].strip()))
+##    aaa=Country.objects.filter(countryft=1)
+##    ccc=[]
+##    for x in aaa.values():
+##        print(x['id'],x['name'])
+##        ccc.append((int(x['id']),x['name'].strip()))
 
 #    country_id = django_filters.MultipleChoiceFilter(choices=ccc)
     
@@ -92,8 +93,9 @@ class CurrentFilter(django_filters.FilterSet):
         fields = {
             'datetimeval' : [],
             'metric_id': ['exact', ],
+            'metric_id__metric_category': ['exact', ],
             'country_id': ['exact', ],
-#            'country_id': [],            
+##            'country_id': [],            
             'status_ok': [],}
 
 #######################

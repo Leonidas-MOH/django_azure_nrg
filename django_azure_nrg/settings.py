@@ -60,7 +60,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',    
+#    'whitenoise.middleware.WhiteNoiseMiddleware',    
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -106,8 +106,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
         'NAME': 'nrg-trading-db',
-        'HOST': 'tcp:nrg-trading-srv.database.windows.net',
-        #'HOST': 'kapassle',
+        #'HOST': 'tcp:nrg-trading-srv.database.windows.net',
+        'HOST': 'kapassle',
         'USER': 'trading-usr',
         'PASSWORD': 'Tr@d1ng!',
         'PORT': '',
