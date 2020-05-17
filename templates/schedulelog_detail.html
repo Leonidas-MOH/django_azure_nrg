@@ -31,8 +31,8 @@
 
 	<h1>Ημερομηνία : {{ object.datetime }} </h1>
 	<h2>Περιγραφή  : {{ object.description }}</h2>
-	<h2>Task  <a href={%url 'scheduler:tasklist'%} type="button" class="btn btn-lg btn-success"> {{ scheduleparam_action1_name}}</a>  <pre>{{ object.task.name }}  </pre></a></h2>
-	<h2>Schedule Task <a href={%url 'scheduler:scheduledtasklist'%} type="button" class="btn btn-lg btn-success"> {{ param_action1_name}} </a><pre>{{ object.scheduled_task }}</pre></h2>
+	<h2>Task  <a href={%url 'scheduler:taskview' object.task.id %} type="button" class="btn btn-lg btn-success"> {{ scheduleparam_action1_name}}</a>  <pre>{{ object.task.name }} </pre></a></h2>
+	<h2>Schedule Task <a href={%url 'scheduler:scheduledtaskview' object.scheduled_task.id %} type="button" class="btn btn-lg btn-success"> {{ param_action1_name}} </a><pre>{{ object.scheduled_task }}</pre></h2>
 	<h2>Log 		<pre>{{ object.log }}</pre>	 </h2>
 	<h2>Status			: {{ object.status }} </h2>
 	

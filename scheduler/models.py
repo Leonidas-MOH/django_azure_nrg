@@ -67,7 +67,7 @@ class TaskParam(models.Model):
         db_table = 'Task_Param'
 
     def __str__(self):
-        return self.task.strip()  + ' ' + self.param_name.strip()
+        return self.param_name.strip()
 
     def get_absolute_url(self):
         return reverse('scheduler:taskparamlist')        
