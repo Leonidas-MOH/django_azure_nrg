@@ -33,6 +33,9 @@ from django_tables2.utils import A
 #######################
 
 from .models import Task
+
+from .funcs import GetAzureFuncAddress
+
 ModelClassName = Task
 
 ModelStr = 'task'
@@ -59,7 +62,7 @@ ViewComAction = 'view'
 
 ModelClassNameStr = 'tasks'
 Model_Fields = ['name','url','code','active']
-Table_Sequence = ['name','detail','detailed','active','url','...']
+Table_Sequence = ['name','detail','detailed','detailex','active','url','...']
 Table_Exclude = ['id','code']
 Rows_Per_Page = 25
 
@@ -86,7 +89,8 @@ class CurrentForm(forms.ModelForm):
 
 class CurrentTable(ExportMixin, tables.Table):
     detail   = tables.LinkColumn(PathStart+'view', args=[A('pk')], orderable=False, empty_values=[''])
-    detailed = tables.LinkColumn(PathStart+'edit', args=[A('pk')], orderable=False, empty_values=[''])    
+    detailed = tables.LinkColumn(PathStart+'edit', args=[A('pk')], orderable=False, empty_values=[''])
+    detailex = tables.LinkColumn(PathStart+'edit', args=[A('pk')], orderable=False, empty_values=[''])        
     class Meta:
         model = ModelClassName
         row_attrs = {
@@ -103,6 +107,9 @@ class CurrentTable(ExportMixin, tables.Table):
     def render_detailed(self, record):
         rev = reverse(PathStart+'edit', kwargs={'pk': str(record.id)})
         return mark_safe('<a href=' + rev + f'><span style="color:green">{EditComName}</span></a>')
+    def render_detailex(self, record):
+        rev = GetAzureFuncAddress(record.id)
+        return mark_safe('<a href=' + rev + f'><span style="color:black">Exec</span></a>')
 
 
 

@@ -11,6 +11,7 @@ from . import viewsFundamentalsWHv
 from . import viewsSpotPrices
 from . import viewsUpdateMC
 from . import viewsView1
+from . import viewsDiff
 
 urlpatterns = [
 ##    path('list/', views.MetricsDetailFiltered, name='list'),
@@ -47,6 +48,9 @@ urlpatterns = [
 
     path('view1list/', viewsView1.DetailFiltered, name='view1list'),
     path('view1view/<int:pk>/', viewsView1.View.as_view(), name='view1view'),
+
+    path('viewdiff/', viewsDiff.get_name, name='viewdiff'),
+    path('viewdiff0/<int:pk>/', viewsDiff.DetailFiltered, name='viewdiff0'),
     
     ]
 
