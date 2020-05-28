@@ -37,15 +37,18 @@ def get_name(request):
             Country3  = form.cleaned_data['cnt3_select']
             Metric1   = form.cleaned_data['met1_select']
             Metric2   = form.cleaned_data['met2_select']
-            print('1++++++++',Metric1,Metric1.id)
-            print('2++++++++',Metric2,Metric2.id)
+            #print('1++++++++',Metric1,Metric1.id)
+            #print('2++++++++',Metric2,Metric2.id)
 
             if Metric1.id in Metric2Table.keys():
                 tmpmt = Metric2Table[Metric1.id]
                 panda=addmetric(panda,Country1,DateFrom,DateTo,tmpmt[0],tmpmt[1])
-            if Metric2.id in Metric2Table.keys():
-                tmpmt = Metric2Table[Metric2.id]
-                panda=addmetric(panda,Country1,DateFrom,DateTo,tmpmt[0],tmpmt[1])
+            if Metric2 is None:
+                pass
+            else:
+                if Metric2.id in Metric2Table.keys():
+                    tmpmt = Metric2Table[Metric2.id]
+                    panda=addmetric(panda,Country1,DateFrom,DateTo,tmpmt[0],tmpmt[1])
 
                  
             if Country2 is None:
@@ -54,9 +57,12 @@ def get_name(request):
                 if Metric1.id in Metric2Table.keys():
                     tmpmt = Metric2Table[Metric1.id]
                     panda=addmetric(panda,Country2,DateFrom,DateTo,tmpmt[0],tmpmt[1])
-                if Metric2.id in Metric2Table.keys():
-                    tmpmt = Metric2Table[Metric2.id]
-                    panda=addmetric(panda,Country2,DateFrom,DateTo,tmpmt[0],tmpmt[1])
+                if Metric2 is None:
+                    pass
+                else:
+                    if Metric2.id in Metric2Table.keys():
+                        tmpmt = Metric2Table[Metric2.id]
+                        panda=addmetric(panda,Country2,DateFrom,DateTo,tmpmt[0],tmpmt[1])
 
             if Country3 is None:
                 pass
@@ -64,9 +70,12 @@ def get_name(request):
                 if Metric1.id in Metric2Table.keys():
                     tmpmt = Metric2Table[Metric1.id]
                     panda=addmetric(panda,Country3,DateFrom,DateTo,tmpmt[0],tmpmt[1])
-                if Metric2.id in Metric2Table.keys():
-                    tmpmt = Metric2Table[Metric2.id]
-                    panda=addmetric(panda,Country3,DateFrom,DateTo,tmpmt[0],tmpmt[1])
+                if Metric2 is None:
+                    pass
+                else:
+                    if Metric2.id in Metric2Table.keys():
+                        tmpmt = Metric2Table[Metric2.id]
+                        panda=addmetric(panda,Country3,DateFrom,DateTo,tmpmt[0],tmpmt[1])
 
             ds.GlobDict[1] = panda.columns
             ds.PandasDict[1] = panda
@@ -136,6 +145,67 @@ class CurrentTable(ExportMixin, tables.Table):
     Field38 = tables.Column()
     Field39 = tables.Column()
     Field40 = tables.Column()    
+    Field41 = tables.Column()
+    Field42 = tables.Column()
+    Field43 = tables.Column()
+    Field44 = tables.Column()
+    Field45 = tables.Column()
+    Field46 = tables.Column()
+    Field47 = tables.Column()
+    Field48 = tables.Column()
+    Field49 = tables.Column()
+    Field50 = tables.Column()
+    Field51 = tables.Column()
+    Field52 = tables.Column()
+    Field53 = tables.Column()
+    Field54 = tables.Column()
+    Field55 = tables.Column()
+    Field56 = tables.Column()
+    Field57 = tables.Column()
+    Field58 = tables.Column()
+    Field59 = tables.Column()
+    Field60 = tables.Column()    
+    Field61 = tables.Column()
+    Field62 = tables.Column()
+    Field63 = tables.Column()
+    Field64 = tables.Column()
+    Field65 = tables.Column()
+    Field66 = tables.Column()
+    Field67 = tables.Column()
+    Field68 = tables.Column()
+    Field69 = tables.Column()
+    Field70 = tables.Column()    
+    Field71 = tables.Column()
+    Field72 = tables.Column()
+    Field73 = tables.Column()
+    Field74 = tables.Column()
+    Field75 = tables.Column()
+    Field76 = tables.Column()
+    Field77 = tables.Column()
+    Field78 = tables.Column()
+    Field79 = tables.Column()
+    Field80 = tables.Column()    
+    Field81 = tables.Column()
+    Field82 = tables.Column()
+    Field83 = tables.Column()
+    Field84 = tables.Column()
+    Field85 = tables.Column()
+    Field86 = tables.Column()
+    Field87 = tables.Column()
+    Field88 = tables.Column()
+    Field89 = tables.Column()
+    Field90 = tables.Column()    
+    Field91 = tables.Column()
+    Field92 = tables.Column()
+    Field93 = tables.Column()
+    Field94 = tables.Column()
+    Field95 = tables.Column()
+    Field96 = tables.Column()
+    Field97 = tables.Column()
+    Field98 = tables.Column()
+    Field99 = tables.Column()
+    Field100 = tables.Column()    
+
 
     prefixed_order_by_field='datetimeval'
         
@@ -166,7 +236,7 @@ def DetailFiltered(request,pk):
     for x in range(rl):
         table.columns['Field'+str(x)].column.verbose_name=glob[x]
 
-    for x in range(rl,41):
+    for x in range(rl,100):
         table.columns['Field'+str(x)].column.visible=False
             
     

@@ -3,6 +3,8 @@ from django.urls import reverse
 from metrics.models   import *
 from countries.models import *
 
+from simple_history.models import HistoricalRecords
+
 class MeteoDetNew(models.Model):
     id = models.BigAutoField(primary_key=True)
     metric_id = models.ForeignKey(Metric, models.DO_NOTHING, db_column='Metric_id')  # Field name made lowercase.
@@ -21,13 +23,15 @@ class MeteoDetNew(models.Model):
     timeselection = models.TimeField(db_column='TimeSelection', blank=True, null=True)  # Field name made lowercase.
     headerrow = models.IntegerField(db_column='HeaderRow', blank=True, null=True)  # Field name made lowercase.
     usetimeframe = models.BooleanField(db_column='UseTimeFrame', blank=True, null=True)  # Field name made lowercase.
+    history = HistoricalRecords()
 
     class Meta:
         managed = False
+        ordering = ['id']
         db_table = 'Meteo_Det_New'
 
     def __str__(self):
-        return self.id
+        return str(self.id) + ' ' + self.metric_id.name + ' ' +self.country_id.name
 
     def get_absolute_url(self):
         return reverse('fetchparams:meteodetlist')        
@@ -43,16 +47,18 @@ class SpotDetNew(models.Model):
     insertminutes = models.IntegerField(db_column='InsertMinutes', blank=True, null=True)  # Field name made lowercase.
     daybefore = models.BooleanField(db_column='DayBefore')  # Field name made lowercase.
     dayafter = models.BooleanField(db_column='DayAfter')  # Field name made lowercase.
-
+    history = HistoricalRecords()
+    
     class Meta:
         managed = False
+        ordering = ['id']
         db_table = 'Spot_Det_New'
 
     def __str__(self):
-        return self.id
-
+        return str(self.id) + ' ' + self.metric_id.name + ' ' +self.country_id.name
+    
     def get_absolute_url(self):
-        return reverse('fetchparams:wattsightdetlist')        
+        return reverse('fetchparams:wattsightlist')        
 
 
 class SeecaoDet(models.Model):
@@ -62,13 +68,15 @@ class SeecaoDet(models.Model):
     entsoe_curves = models.CharField(max_length=100)
     fieldname = models.CharField(db_column='FieldName', max_length=20, blank=True, null=True)  # Field name made lowercase.
     active = models.BooleanField(db_column='Active')  # Field name made lowercase.
-
+    history = HistoricalRecords()
+    
     class Meta:
         managed = False
+        ordering = ['id']
         db_table = 'Seecao_Det'
         
     def __str__(self):
-        return self.id
+        return str(self.id) + ' ' + self.metric_id.name + ' ' +self.country_id.name
 
     def get_absolute_url(self):
         return reverse('fetchparams:seecaodetlist')        

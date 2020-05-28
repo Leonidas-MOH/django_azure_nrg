@@ -1,15 +1,19 @@
 from django.db import models
 from django.urls import reverse
 
+from simple_history.models import HistoricalRecords
+
 class MetricCategory(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(db_column='Name', max_length=50)  # Field name made lowercase.
     abbr = models.CharField(db_column='Abbr', max_length=10)  # Field name made lowercase.
     typeofdata = models.IntegerField(db_column='TypeOfData', blank=True, null=True)  # Field name made lowercase.
     active = models.BooleanField(db_column='Active', blank=True, null=True)  # Field name made lowercase.
+    history = HistoricalRecords()
 
     class Meta:
         managed = False
+        ordering = ['id']        
         db_table = 'Metric_Category'
 
     def __str__(self):
@@ -25,9 +29,11 @@ class TableParam(models.Model):
     id = models.AutoField(primary_key=True)
     table_name = models.CharField(db_column='Table_Name', max_length=50)  # Field name made lowercase.
     description = models.CharField(db_column='Description', max_length=250)  # Field name made lowercase.
+    history = HistoricalRecords()
 
     class Meta:
         managed = False
+        ordering = ['id']
         db_table = 'Table_Param'
 
     def __str__(self):
@@ -44,9 +50,11 @@ class FieldParam(models.Model):
     table = models.ForeignKey('TableParam', models.DO_NOTHING, db_column='Table_Id')  # Field name made lowercase.
     field_name = models.CharField(db_column='Field_Name', max_length=50)  # Field name made lowercase.
     field_description = models.CharField(db_column='Field_Description', max_length=250, blank=True, null=True)  # Field name made lowercase.
-
+    history = HistoricalRecords()
+    
     class Meta:
         managed = False
+        ordering = ['id']
         db_table = 'Field_Param'
 
     def __str__(self):
@@ -69,9 +77,11 @@ class Metric(models.Model):
     tableto = models.CharField(db_column='TableTo', max_length=50, blank=True, null=True)  # Field name made lowercase.
     fieldto = models.CharField(db_column='FieldTo', max_length=50, blank=True, null=True)  # Field name made lowercase.
     fieldto_0 = models.ForeignKey(FieldParam, models.DO_NOTHING, db_column='FieldTo_Id', blank=True, null=True)  # Field name made lowercase. Field renamed because of name conflict.
+    history = HistoricalRecords()
 
     class Meta:
         managed = False
+        ordering = ['id']
         db_table = 'Metric'
 
 

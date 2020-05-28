@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 
+from simple_history.models import HistoricalRecords
+
 
 class ScheduledTask(models.Model):
     id = models.AutoField(primary_key=True)    
@@ -10,9 +12,11 @@ class ScheduledTask(models.Model):
     task = models.ForeignKey('Task', models.DO_NOTHING, db_column='Task_id')  # Field name made lowercase.
     description = models.CharField(db_column='Description', max_length=250)  # Field name made lowercase.
     active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+    history = HistoricalRecords()
 
     class Meta:
         managed = False
+        ordering  = ['id']
         db_table = 'Scheduled_Task'
 
     def __str__(self):
@@ -26,9 +30,11 @@ class Scheduler(models.Model):
     id = models.AutoField(primary_key=True)    
     name = models.CharField(db_column='Name', max_length=30)  # Field name made lowercase.
     description = models.CharField(db_column='Description', max_length=250)  # Field name made lowercase.
+    history = HistoricalRecords()
 
     class Meta:
         managed = False
+        ordering  = ['id']
         db_table = 'Scheduler'
 
     def __str__(self):
@@ -44,9 +50,11 @@ class Task(models.Model):
     url = models.CharField(db_column='Url', max_length=250)  # Field name made lowercase.
     code = models.CharField(max_length=250)
     active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+    history = HistoricalRecords()
 
     class Meta:
         managed = False
+        ordering  = ['id']
         db_table = 'Task'
 
     def __str__(self):
@@ -61,9 +69,11 @@ class TaskParam(models.Model):
     task = models.ForeignKey(Task, models.DO_NOTHING, db_column='Task_Id')  # Field name made lowercase.
     param_name = models.CharField(db_column='Param_Name', max_length=100)  # Field name made lowercase.
     param_value = models.CharField(db_column='Param_Value', max_length=100)  # Field name made lowercase.
+    history = HistoricalRecords()
 
     class Meta:
         managed = False
+        ordering  = ['id']
         db_table = 'Task_Param'
 
     def __str__(self):

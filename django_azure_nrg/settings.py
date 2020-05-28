@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'crispy_forms',
 
 #    'countries',
+    
+#28052020
+    'simple_history',
 
     'countries.apps.CountriesConfig',
     'metrics.apps.MetricsConfig',
@@ -65,6 +68,10 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+
+#28052020
+    'simple_history.middleware.HistoryRequestMiddleware',
+    
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -221,3 +228,5 @@ STATICFILES_DIRS = (
 
 #DATABASE_APPS_MAPPING = {'countries': 'maindata', 'scheduler': 'maindata'}
 #DATABASE_ROUTERS = ['scheduler.routers.NrgAzureRouter']
+
+SIMPLE_HISTORY_REVERT_DISABLED=True

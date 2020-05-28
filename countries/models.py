@@ -3,6 +3,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
+from simple_history.models import HistoricalRecords
+
 class Country(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(verbose_name=_('Ονόμα'),db_column='Name', max_length=50)  # Field name made lowercase.
@@ -14,6 +16,7 @@ class Country(models.Model):
     countryft = models.BooleanField(verbose_name=_('Διακίνηση'),db_column='CountryFT')  # Field name made lowercase.
     country_from = models.ForeignKey('self', models.DO_NOTHING, verbose_name=_('Χώρα Από'), related_name='country_from_country', db_column='Country_From_Id', blank=True, null=True)  # Field name made lowercase.
     country_to = models.ForeignKey('self', models.DO_NOTHING, verbose_name=_('Χώρα Προς'), related_name='country_to_country', db_column='Country_To_Id', blank=True, null=True)  # Field name made lowercase.
+    history = HistoricalRecords()    
 
     class Meta:
         managed = False
