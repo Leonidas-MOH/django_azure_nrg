@@ -1,0 +1,930 @@
+# This is an auto-generated Django model module.
+# You'll have to do the following manually to clean this up:
+#   * Rearrange models' order
+#   * Make sure each model has one field with primary_key=True
+#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+# Feel free to rename the models, but don't rename db_table values or field names.
+from django.db import models
+
+
+class Altptr(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.DateTimeField(db_column='DateTimeVal')  # Field name made lowercase.
+    country = models.ForeignKey('Country', models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    quantity_daily = models.DecimalField(db_column='Quantity_Daily', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    quantity_monthly = models.DecimalField(db_column='Quantity_Monthly', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    quantity_yearly = models.DecimalField(db_column='Quantity_Yearly', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'AltPTR'
+
+
+class Altprices(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.DateTimeField(db_column='DateTimeVal')  # Field name made lowercase.
+    country = models.ForeignKey('Country', models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    nrg_forecast_price = models.DecimalField(db_column='NRG_Forecast_Price', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    nrg_real_price = models.DecimalField(db_column='NRG_Real_Price', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    losses_real = models.DecimalField(db_column='Losses_Real', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'AltPrices'
+
+
+class AppLog(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetime = models.DateTimeField(db_column='DateTime')  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=250)  # Field name made lowercase.
+    function_module = models.CharField(db_column='Function_Module', max_length=150)  # Field name made lowercase.
+    function_id = models.IntegerField(db_column='Function_Id')  # Field name made lowercase.
+    function_log = models.TextField(db_column='Function_Log')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'App_Log'
+
+
+class Country(models.Model):
+    name = models.CharField(db_column='Name', unique=True, max_length=50)  # Field name made lowercase.
+    abbr = models.CharField(db_column='Abbr', max_length=10)  # Field name made lowercase.
+    abbr_nrg = models.CharField(db_column='Abbr-nrg', max_length=10)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    regionof = models.ForeignKey('self', models.DO_NOTHING, db_column='RegionOf')  # Field name made lowercase.
+    abbr_wattsight = models.CharField(db_column='Abbr_WattSight', max_length=10, blank=True, null=True)  # Field name made lowercase.
+    abbr_entsoe = models.CharField(db_column='Abbr_Entsoe', max_length=2, blank=True, null=True)  # Field name made lowercase.
+    countryft = models.BooleanField(db_column='CountryFT', blank=True, null=True)  # Field name made lowercase.
+    country_from = models.ForeignKey('self', models.DO_NOTHING, db_column='Country_From_Id', blank=True, null=True)  # Field name made lowercase.
+    country_to = models.ForeignKey('self', models.DO_NOTHING, db_column='Country_To_Id', blank=True, null=True)  # Field name made lowercase.
+    self_data = models.BooleanField(db_column='Self_Data', blank=True, null=True)  # Field name made lowercase.
+    ordering_part = models.CharField(db_column='Ordering_Part', max_length=10, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Country'
+        unique_together = (('country_from', 'country_to'),)
+
+
+class DailyPtr(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.DateTimeField(db_column='DateTimeVal')  # Field name made lowercase.
+    country = models.ForeignKey(Country, models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    price = models.DecimalField(db_column='Price', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    atc_volume = models.DecimalField(db_column='ATC_Volume', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Daily_PTR'
+        unique_together = (('datetimeval', 'country'),)
+
+
+class DataSource(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=50)  # Field name made lowercase.
+    site1 = models.CharField(db_column='Site1', max_length=255)  # Field name made lowercase.
+    site2 = models.CharField(db_column='Site2', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    site3 = models.CharField(db_column='Site3', max_length=255, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Data_Source'
+
+
+class EmsDet(models.Model):
+    metric_id = models.IntegerField(db_column='Metric_id')  # Field name made lowercase.
+    country_id = models.IntegerField(db_column='Country_Id')  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'EMS_Det'
+
+
+class Feesnflows(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.DateTimeField(db_column='DateTimeVal')  # Field name made lowercase.
+    country = models.ForeignKey(Country, models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    fee = models.DecimalField(db_column='Fee', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    flow = models.DecimalField(db_column='Flow', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'FeesNFlows'
+
+
+class FieldParam(models.Model):
+    table = models.ForeignKey('TableParam', models.DO_NOTHING, db_column='Table_Id')  # Field name made lowercase.
+    field_name = models.CharField(db_column='Field_Name', max_length=50)  # Field name made lowercase.
+    field_description = models.CharField(db_column='Field_Description', max_length=250, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Field_Param'
+
+
+class FundamentalsMFv(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.DateTimeField(db_column='DateTimeVal')  # Field name made lowercase.
+    country = models.ForeignKey(Country, models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    consumption = models.DecimalField(db_column='Consumption', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wind = models.DecimalField(db_column='Wind', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    pv = models.DecimalField(db_column='PV', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Fundamentals_M_FV'
+        unique_together = (('datetimeval', 'country'),)
+
+
+class FundamentalsMOv(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.DateTimeField(db_column='DateTimeVal')  # Field name made lowercase.
+    country = models.ForeignKey(Country, models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    consumption = models.DecimalField(db_column='Consumption', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wind = models.DecimalField(db_column='Wind', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    pv = models.DecimalField(db_column='PV', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Fundamentals_M_OV'
+        unique_together = (('datetimeval', 'country'),)
+
+
+class FundamentalsMSv(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.DateTimeField(db_column='DateTimeVal')  # Field name made lowercase.
+    country = models.ForeignKey(Country, models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    consumption = models.DecimalField(db_column='Consumption', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wind = models.DecimalField(db_column='Wind', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    pv = models.DecimalField(db_column='PV', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Fundamentals_M_SV'
+        unique_together = (('datetimeval', 'country'),)
+
+
+class FundamentalsWAv(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.DateTimeField(db_column='DateTimeVal')  # Field name made lowercase.
+    country = models.ForeignKey(Country, models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    consumption = models.DecimalField(db_column='Consumption', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wind = models.DecimalField(db_column='Wind', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    pv = models.DecimalField(db_column='PV', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    nuclear = models.DecimalField(db_column='Nuclear', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    coal = models.DecimalField(db_column='Coal', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    lignite = models.DecimalField(db_column='Lignite', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    ccgt = models.DecimalField(db_column='CCGT', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    hydro = models.DecimalField(db_column='Hydro', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    commercial_flow = models.DecimalField(db_column='Commercial_flow', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    ntc = models.DecimalField(db_column='NTC', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Fundamentals_W_AV'
+        unique_together = (('datetimeval', 'country'),)
+
+
+class FundamentalsWFv(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.DateTimeField(db_column='DateTimeVal')  # Field name made lowercase.
+    country = models.ForeignKey(Country, models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    consumption = models.DecimalField(db_column='Consumption', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wind = models.DecimalField(db_column='Wind', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    pv = models.DecimalField(db_column='PV', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    nuclear = models.DecimalField(db_column='Nuclear', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    net_imports = models.DecimalField(db_column='Net_Imports', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    coal = models.DecimalField(db_column='Coal', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    lignite = models.DecimalField(db_column='Lignite', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    ccgt = models.DecimalField(db_column='CCGT', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    hydro = models.DecimalField(db_column='Hydro', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Fundamentals_W_FV'
+        unique_together = (('datetimeval', 'country'),)
+
+
+class FundamentalsWHv(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.DateTimeField(db_column='DateTimeVal')  # Field name made lowercase.
+    country = models.ForeignKey(Country, models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    consumption = models.DecimalField(db_column='Consumption', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    wind = models.DecimalField(db_column='Wind', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    pv = models.DecimalField(db_column='PV', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    hydro = models.DecimalField(db_column='Hydro', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Fundamentals_W_HV'
+        unique_together = (('datetimeval', 'country'),)
+
+
+class JaoAuctions(models.Model):
+    datetime = models.TextField(db_column='DateTime')  # Field name made lowercase. This field type is a guess.
+    auction_id = models.BigIntegerField(db_column='Auction_Id')  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=100)  # Field name made lowercase.
+    country_id = models.IntegerField(db_column='Country_Id', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Jao_Auctions'
+
+
+class JaoAuctionsDet(models.Model):
+    datetime = models.TextField(db_column='DateTime')  # Field name made lowercase. This field type is a guess.
+    auction_id = models.BigIntegerField(db_column='Auction_Id')  # Field name made lowercase.
+    head_id = models.BigIntegerField(db_column='Head_id')  # Field name made lowercase.
+    country_id = models.IntegerField(db_column='Country_Id', blank=True, null=True)  # Field name made lowercase.
+    offered_capacity = models.DecimalField(db_column='Offered_Capacity', max_digits=12, decimal_places=2)  # Field name made lowercase.
+    total_requested_capacity = models.DecimalField(db_column='Total_Requested_Capacity', max_digits=12, decimal_places=2)  # Field name made lowercase.
+    total_allocated_capacity = models.DecimalField(db_column='Total_Allocated_Capacity', max_digits=12, decimal_places=2)  # Field name made lowercase.
+    auction_clearing_price = models.DecimalField(db_column='Auction_Clearing_Price', max_digits=12, decimal_places=2)  # Field name made lowercase.
+    number_of_auction_participants = models.IntegerField(db_column='Number_of_Auction_Participants')  # Field name made lowercase.
+    number_of_successful_participants = models.IntegerField(db_column='Number_of_Successful_Participants')  # Field name made lowercase.
+    number_of_auction_bids = models.IntegerField(db_column='Number_of_Auction_Bids')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Jao_Auctions_Det'
+
+
+class JaoDet(models.Model):
+    metric_id = models.IntegerField(db_column='Metric_id')  # Field name made lowercase.
+    country_id = models.IntegerField(db_column='Country_Id')  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Jao_Det'
+
+
+class MeteoDetNew(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    metric = models.ForeignKey('Metric', models.DO_NOTHING, db_column='Metric_id')  # Field name made lowercase.
+    country_id = models.IntegerField(db_column='Country_Id')  # Field name made lowercase.
+    ftppath = models.CharField(db_column='FtpPath', max_length=255)  # Field name made lowercase.
+    filename = models.CharField(db_column='FileName', max_length=120)  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+    tableto = models.CharField(db_column='TableTo', max_length=50)  # Field name made lowercase.
+    fieldto = models.CharField(db_column='FieldTo', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    insertminutes = models.IntegerField(db_column='InsertMinutes', blank=True, null=True)  # Field name made lowercase.
+    daybefore = models.BooleanField(db_column='DayBefore')  # Field name made lowercase.
+    dayafter = models.BooleanField(db_column='DayAfter')  # Field name made lowercase.
+    fieldname = models.CharField(db_column='FieldName', max_length=25, blank=True, null=True)  # Field name made lowercase.
+    timefrom = models.TimeField(db_column='TimeFrom', blank=True, null=True)  # Field name made lowercase.
+    timeto = models.TimeField(db_column='TimeTo', blank=True, null=True)  # Field name made lowercase.
+    timeselection = models.TimeField(db_column='TimeSelection', blank=True, null=True)  # Field name made lowercase.
+    headerrow = models.IntegerField(db_column='HeaderRow', blank=True, null=True)  # Field name made lowercase.
+    usetimeframe = models.BooleanField(db_column='UseTimeFrame', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Meteo_Det_New'
+
+
+class Metric(models.Model):
+    name = models.CharField(db_column='Name', max_length=150)  # Field name made lowercase.
+    abbr = models.CharField(db_column='Abbr', max_length=15)  # Field name made lowercase.
+    uofm_id = models.IntegerField(db_column='UofM_Id', blank=True, null=True)  # Field name made lowercase.
+    comments = models.CharField(db_column='Comments', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    metric_category = models.ForeignKey('MetricCategory', models.DO_NOTHING, db_column='Metric_Category_Id')  # Field name made lowercase.
+    name1 = models.CharField(db_column='Name1', max_length=150)  # Field name made lowercase.
+    typeofmetric = models.IntegerField(db_column='TypeOfMetric', blank=True, null=True)  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active', blank=True, null=True)  # Field name made lowercase.
+    tableto = models.CharField(db_column='TableTo', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    fieldto = models.CharField(db_column='FieldTo', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    fieldto_0 = models.ForeignKey(FieldParam, models.DO_NOTHING, db_column='FieldTo_Id', blank=True, null=True)  # Field name made lowercase. Field renamed because of name conflict.
+    country_pair = models.BooleanField(db_column='Country_Pair', blank=True, null=True)  # Field name made lowercase.
+    ordering_part = models.CharField(db_column='Ordering_Part', max_length=10, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Metric'
+
+
+class MetricCategory(models.Model):
+    name = models.CharField(db_column='Name', max_length=50)  # Field name made lowercase.
+    abbr = models.CharField(db_column='Abbr', max_length=10)  # Field name made lowercase.
+    typeofdata = models.IntegerField(db_column='TypeOfData', blank=True, null=True)  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Metric_Category'
+
+
+class MetricstrValues(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.TextField(db_column='DateTimeVal')  # Field name made lowercase. This field type is a guess.
+    countryfrom = models.ForeignKey(Country, models.DO_NOTHING, db_column='CountryFrom_Id')  # Field name made lowercase.
+    countryto = models.ForeignKey(Country, models.DO_NOTHING, db_column='CountryTo_Id')  # Field name made lowercase.
+    metric = models.ForeignKey(Metric, models.DO_NOTHING, db_column='Metric_Id')  # Field name made lowercase.
+    value = models.DecimalField(db_column='Value', max_digits=10, decimal_places=4)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'MetricsTR_Values'
+        unique_together = (('datetimeval', 'countryfrom', 'countryto', 'metric'),)
+
+
+class MetricsValues(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.TextField(db_column='DateTimeVal')  # Field name made lowercase. This field type is a guess.
+    country = models.ForeignKey(Country, models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    metric = models.ForeignKey(Metric, models.DO_NOTHING, db_column='Metric_Id')  # Field name made lowercase.
+    value = models.DecimalField(db_column='Value', max_digits=10, decimal_places=4)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Metrics_Values'
+        unique_together = (('country', 'metric', 'datetimeval'),)
+
+
+class PositionNrg(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.DateTimeField(db_column='DateTimeVal')  # Field name made lowercase.
+    country = models.ForeignKey(Country, models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    quantity = models.DecimalField(db_column='Quantity', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    price = models.DecimalField(db_column='Price', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Position_NRG'
+
+
+class ScheduleLog(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetime = models.DateTimeField(db_column='DateTime')  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=250)  # Field name made lowercase.
+    task = models.ForeignKey('Task', models.DO_NOTHING, db_column='Task_Id')  # Field name made lowercase.
+    scheduled_task = models.ForeignKey('ScheduledTask', models.DO_NOTHING, db_column='Scheduled_Task_Id')  # Field name made lowercase.
+    log = models.TextField(db_column='Log')  # Field name made lowercase.
+    status = models.IntegerField(db_column='Status', blank=True, null=True)  # Field name made lowercase.
+    file_log = models.CharField(db_column='File_Log', max_length=250, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Schedule_Log'
+
+
+class ScheduledTask(models.Model):
+    scheduler = models.ForeignKey('Scheduler', models.DO_NOTHING, db_column='Scheduler_Id')  # Field name made lowercase.
+    timefrom = models.TimeField(db_column='TimeFrom')  # Field name made lowercase.
+    timeto = models.TimeField(db_column='TimeTo')  # Field name made lowercase.
+    task = models.ForeignKey('Task', models.DO_NOTHING, db_column='Task_id')  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=250)  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Scheduled_Task'
+
+
+class Scheduler(models.Model):
+    name = models.CharField(db_column='Name', max_length=30)  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=250)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Scheduler'
+
+
+class SeecaoAuctions(models.Model):
+    datetime = models.TextField(db_column='DateTime')  # Field name made lowercase. This field type is a guess.
+    auction_id = models.BigIntegerField(db_column='Auction_Id')  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=100)  # Field name made lowercase.
+    country_id = models.IntegerField(db_column='Country_Id', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Seecao_Auctions'
+        unique_together = (('datetime', 'auction_id', 'country_id'),)
+
+
+class SeecaoAuctionsDet(models.Model):
+    datetime = models.TextField(db_column='DateTime')  # Field name made lowercase. This field type is a guess.
+    auction_id = models.BigIntegerField(db_column='Auction_Id')  # Field name made lowercase.
+    head_id = models.BigIntegerField(db_column='Head_id')  # Field name made lowercase.
+    country_id = models.IntegerField(db_column='Country_Id', blank=True, null=True)  # Field name made lowercase.
+    offered_capacity = models.DecimalField(db_column='Offered_Capacity', max_digits=12, decimal_places=2)  # Field name made lowercase.
+    total_requested_capacity = models.DecimalField(db_column='Total_Requested_Capacity', max_digits=12, decimal_places=2)  # Field name made lowercase.
+    total_allocated_capacity = models.DecimalField(db_column='Total_Allocated_Capacity', max_digits=12, decimal_places=2)  # Field name made lowercase.
+    auction_clearing_price = models.DecimalField(db_column='Auction_Clearing_Price', max_digits=12, decimal_places=2)  # Field name made lowercase.
+    number_of_auction_participants = models.IntegerField(db_column='Number_of_Auction_Participants')  # Field name made lowercase.
+    number_of_successful_participants = models.IntegerField(db_column='Number_of_Successful_Participants')  # Field name made lowercase.
+    number_of_auction_bids = models.IntegerField(db_column='Number_of_Auction_Bids')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Seecao_Auctions_Det'
+        unique_together = (('datetime', 'auction_id'),)
+
+
+class SeecaoDet(models.Model):
+    metric_id = models.IntegerField(db_column='Metric_id')  # Field name made lowercase.
+    country_id = models.IntegerField(db_column='Country_Id')  # Field name made lowercase.
+    entsoe_curves = models.CharField(max_length=100)
+    fieldname = models.CharField(db_column='FieldName', max_length=20, blank=True, null=True)  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Seecao_Det'
+
+
+class SeecaoFilenames(models.Model):
+    seecaofilename_start = models.CharField(db_column='SeecaoFileName_Start', max_length=255)  # Field name made lowercase.
+    seecaofilename_end = models.CharField(db_column='SeecaoFileName_End', max_length=255)  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Seecao_FileNames'
+
+
+class SpotDet(models.Model):
+    curvesnameprice = models.CharField(db_column='CurvesNamePrice', max_length=50)  # Field name made lowercase.
+    curvesnamevolume = models.CharField(db_column='CurvesNameVolume', max_length=50)  # Field name made lowercase.
+    countryid = models.IntegerField(db_column='CountryId')  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+    table2 = models.CharField(db_column='Table2', max_length=50)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Spot_Det'
+
+
+class SpotDetNew(models.Model):
+    curvesnameprice = models.CharField(db_column='CurvesNamePrice', max_length=150)  # Field name made lowercase.
+    metric = models.ForeignKey(Metric, models.DO_NOTHING, db_column='Metric_Id')  # Field name made lowercase.
+    country = models.ForeignKey(Country, models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+    tableto = models.CharField(db_column='TableTo', max_length=50)  # Field name made lowercase.
+    insertminutes = models.IntegerField(db_column='InsertMinutes', blank=True, null=True)  # Field name made lowercase.
+    daybefore = models.BooleanField(db_column='DayBefore')  # Field name made lowercase.
+    dayafter = models.BooleanField(db_column='DayAfter', blank=True, null=True)  # Field name made lowercase.
+    daycurrent = models.BooleanField(db_column='DayCurrent', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Spot_Det_New'
+
+
+class SpotPrices(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.DateTimeField(db_column='DateTimeVal')  # Field name made lowercase.
+    country = models.ForeignKey(Country, models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    price_forecast = models.DecimalField(db_column='Price_Forecast', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    price_actual = models.DecimalField(db_column='Price_Actual', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Spot_Prices'
+        unique_together = (('datetimeval', 'country'),)
+
+
+class TableParam(models.Model):
+    table_name = models.CharField(db_column='Table_Name', max_length=50)  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=250)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Table_Param'
+
+
+class Task(models.Model):
+    name = models.CharField(db_column='Name', max_length=100)  # Field name made lowercase.
+    url = models.CharField(db_column='Url', max_length=250)  # Field name made lowercase.
+    code = models.CharField(max_length=250)
+    active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Task'
+
+
+class TaskParam(models.Model):
+    task = models.ForeignKey(Task, models.DO_NOTHING, db_column='Task_Id')  # Field name made lowercase.
+    param_name = models.CharField(db_column='Param_Name', max_length=100)  # Field name made lowercase.
+    param_value = models.CharField(db_column='Param_Value', max_length=100)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Task_Param'
+
+
+class UMetricsDataSource(models.Model):
+    metric_id = models.IntegerField(db_column='Metric_Id', primary_key=True)  # Field name made lowercase.
+    data_source_id = models.IntegerField(db_column='Data_Source_Id')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'U_Metrics_Data_Source'
+        unique_together = (('metric_id', 'data_source_id'),)
+
+
+class Unitofmessure(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    name = models.CharField(db_column='Name', max_length=50)  # Field name made lowercase.
+    abbr = models.CharField(db_column='Abbr', max_length=10)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'UnitOfMessure'
+
+
+class UpdateLog(models.Model):
+    datetimeval = models.DateField(db_column='DateTimeVal')  # Field name made lowercase.
+    country_id = models.IntegerField(db_column='Country_Id')  # Field name made lowercase.
+    metric_id = models.IntegerField(db_column='Metric_Id')  # Field name made lowercase.
+    comp_datetime = models.DateTimeField(db_column='Comp_DateTime', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Update_Log'
+        unique_together = (('datetimeval', 'metric_id', 'country_id'),)
+
+
+class UpdatedMc(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.DateField(db_column='DateTimeVal')  # Field name made lowercase.
+    metric_id = models.IntegerField(db_column='Metric_Id')  # Field name made lowercase.
+    country_id = models.IntegerField(db_column='Country_Id')  # Field name made lowercase.
+    status_ok = models.BooleanField(db_column='Status_OK')  # Field name made lowercase.
+    status_datetimeval = models.DateTimeField(db_column='Status_DateTimeVal')  # Field name made lowercase.
+    commects = models.CharField(db_column='Commects', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    updatesource = models.IntegerField(db_column='UpdateSource', blank=True, null=True)  # Field name made lowercase.
+    updaretaskid = models.BigIntegerField(db_column='UpdareTaskId', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Updated_MC'
+        unique_together = (('datetimeval', 'metric_id', 'country_id'),)
+
+
+class UserFieldsTable(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    datetimeval = models.DateTimeField(db_column='DateTimeVal')  # Field name made lowercase.
+    country = models.ForeignKey(Country, models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    user_field_01 = models.DecimalField(db_column='User_Field_01', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_02 = models.DecimalField(db_column='User_Field_02', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_03 = models.DecimalField(db_column='User_Field_03', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_04 = models.DecimalField(db_column='User_Field_04', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_05 = models.DecimalField(db_column='User_Field_05', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_06 = models.DecimalField(db_column='User_Field_06', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_07 = models.DecimalField(db_column='User_Field_07', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_08 = models.DecimalField(db_column='User_Field_08', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_09 = models.DecimalField(db_column='User_Field_09', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_10 = models.DecimalField(db_column='User_Field_10', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_11 = models.DecimalField(db_column='User_Field_11', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_12 = models.DecimalField(db_column='User_Field_12', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_13 = models.DecimalField(db_column='User_Field_13', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_14 = models.DecimalField(db_column='User_Field_14', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_15 = models.DecimalField(db_column='User_Field_15', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_16 = models.DecimalField(db_column='User_Field_16', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_17 = models.DecimalField(db_column='User_Field_17', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_18 = models.DecimalField(db_column='User_Field_18', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_19 = models.DecimalField(db_column='User_Field_19', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+    user_field_20 = models.DecimalField(db_column='User_Field_20', max_digits=10, decimal_places=4, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'User_Fields_Table'
+
+
+class WattsightDet(models.Model):
+    curvesnameprice = models.CharField(db_column='CurvesNamePrice', max_length=150)  # Field name made lowercase.
+    metric = models.ForeignKey(Metric, models.DO_NOTHING, db_column='Metric_Id')  # Field name made lowercase.
+    country = models.ForeignKey(Country, models.DO_NOTHING, db_column='Country_Id')  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+    tableto = models.CharField(db_column='TableTo', max_length=50)  # Field name made lowercase.
+    insertminutes = models.IntegerField(db_column='InsertMinutes', blank=True, null=True)  # Field name made lowercase.
+    daybefore = models.BooleanField(db_column='DayBefore')  # Field name made lowercase.
+    dayafter = models.BooleanField(db_column='DayAfter', blank=True, null=True)  # Field name made lowercase.
+    daycurrent = models.BooleanField(db_column='DayCurrent', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'WattSight_Det'
+
+
+class WattsightDetTrans(models.Model):
+    curvesnameprice = models.CharField(db_column='CurvesNamePrice', max_length=150)  # Field name made lowercase.
+    metric = models.ForeignKey(Metric, models.DO_NOTHING, db_column='Metric_Id')  # Field name made lowercase.
+    countryfrom = models.ForeignKey(Country, models.DO_NOTHING, db_column='CountryFrom_Id')  # Field name made lowercase.
+    countryto = models.ForeignKey(Country, models.DO_NOTHING, db_column='CountryTo_Id')  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+    tableto = models.CharField(db_column='TableTo', max_length=50)  # Field name made lowercase.
+    insertminutes = models.IntegerField(db_column='InsertMinutes', blank=True, null=True)  # Field name made lowercase.
+    daybefore = models.BooleanField(db_column='DayBefore')  # Field name made lowercase.
+    dayafter = models.BooleanField(db_column='DayAfter', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'WattSight_Det_Trans'
+
+
+class AuthGroup(models.Model):
+    name = models.CharField(unique=True, max_length=150)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_group'
+
+
+class AuthGroupPermissions(models.Model):
+    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
+    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_group_permissions'
+        unique_together = (('group', 'permission'),)
+
+
+class AuthPermission(models.Model):
+    name = models.CharField(max_length=255)
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
+    codename = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_permission'
+        unique_together = (('content_type', 'codename'),)
+
+
+class AuthUser(models.Model):
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField(blank=True, null=True)
+    is_superuser = models.BooleanField()
+    username = models.CharField(unique=True, max_length=150)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=150)
+    email = models.CharField(max_length=254)
+    is_staff = models.BooleanField()
+    is_active = models.BooleanField()
+    date_joined = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user'
+
+
+class AuthUserGroups(models.Model):
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user_groups'
+        unique_together = (('user', 'group'),)
+
+
+class AuthUserUserPermissions(models.Model):
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user_user_permissions'
+        unique_together = (('user', 'permission'),)
+
+
+class CountriesHistoricalcountry(models.Model):
+    id = models.IntegerField()
+    name = models.CharField(db_column='Name', max_length=50)  # Field name made lowercase.
+    abbr = models.CharField(db_column='Abbr', max_length=10)  # Field name made lowercase.
+    abbr_nrg = models.CharField(db_column='Abbr-nrg', max_length=10)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    abbr_wattsight = models.CharField(db_column='Abbr_WattSight', max_length=10, blank=True, null=True)  # Field name made lowercase.
+    abbr_entsoe = models.CharField(db_column='Abbr_Entsoe', max_length=2, blank=True, null=True)  # Field name made lowercase.
+    countryft = models.BooleanField(db_column='CountryFT')  # Field name made lowercase.
+    history_id = models.AutoField(primary_key=True)
+    history_date = models.DateTimeField()
+    history_change_reason = models.CharField(max_length=100, blank=True, null=True)
+    history_type = models.CharField(max_length=1)
+    country_from_id = models.IntegerField(db_column='Country_From_Id', blank=True, null=True)  # Field name made lowercase.
+    country_to_id = models.IntegerField(db_column='Country_To_Id', blank=True, null=True)  # Field name made lowercase.
+    history_user = models.ForeignKey(AuthUser, models.DO_NOTHING, blank=True, null=True)
+    regionof = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'countries_historicalcountry'
+
+
+class DjangoAdminLog(models.Model):
+    action_time = models.DateTimeField()
+    object_id = models.TextField(blank=True, null=True)
+    object_repr = models.CharField(max_length=200)
+    action_flag = models.SmallIntegerField()
+    change_message = models.TextField()
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'django_admin_log'
+
+
+class DjangoContentType(models.Model):
+    app_label = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'django_content_type'
+        unique_together = (('app_label', 'model'),)
+
+
+class DjangoMigrations(models.Model):
+    app = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    applied = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_migrations'
+
+
+class DjangoSession(models.Model):
+    session_key = models.CharField(primary_key=True, max_length=40)
+    session_data = models.TextField()
+    expire_date = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_session'
+
+
+class FetchparamsHistoricalmeteodetnew(models.Model):
+    id = models.BigIntegerField()
+    ftppath = models.CharField(db_column='FtpPath', max_length=255)  # Field name made lowercase.
+    filename = models.CharField(db_column='FileName', max_length=120)  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+    tableto = models.CharField(db_column='TableTo', max_length=50)  # Field name made lowercase.
+    fieldto = models.CharField(db_column='FieldTo', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    insertminutes = models.IntegerField(db_column='InsertMinutes', blank=True, null=True)  # Field name made lowercase.
+    daybefore = models.BooleanField(db_column='DayBefore')  # Field name made lowercase.
+    dayafter = models.BooleanField(db_column='DayAfter')  # Field name made lowercase.
+    fieldname = models.CharField(db_column='FieldName', max_length=25, blank=True, null=True)  # Field name made lowercase.
+    timefrom = models.TimeField(db_column='TimeFrom', blank=True, null=True)  # Field name made lowercase.
+    timeto = models.TimeField(db_column='TimeTo', blank=True, null=True)  # Field name made lowercase.
+    timeselection = models.TimeField(db_column='TimeSelection', blank=True, null=True)  # Field name made lowercase.
+    headerrow = models.IntegerField(db_column='HeaderRow', blank=True, null=True)  # Field name made lowercase.
+    usetimeframe = models.BooleanField(db_column='UseTimeFrame', blank=True, null=True)  # Field name made lowercase.
+    history_id = models.AutoField(primary_key=True)
+    history_date = models.DateTimeField()
+    history_change_reason = models.CharField(max_length=100, blank=True, null=True)
+    history_type = models.CharField(max_length=1)
+    country_id = models.IntegerField(db_column='Country_id', blank=True, null=True)  # Field name made lowercase.
+    history_user = models.ForeignKey(AuthUser, models.DO_NOTHING, blank=True, null=True)
+    metric_id = models.IntegerField(db_column='Metric_id', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'fetchparams_historicalmeteodetnew'
+
+
+class FetchparamsHistoricalseecaodet(models.Model):
+    id = models.IntegerField()
+    entsoe_curves = models.CharField(max_length=100)
+    fieldname = models.CharField(db_column='FieldName', max_length=20, blank=True, null=True)  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+    history_id = models.AutoField(primary_key=True)
+    history_date = models.DateTimeField()
+    history_change_reason = models.CharField(max_length=100, blank=True, null=True)
+    history_type = models.CharField(max_length=1)
+    country_id = models.IntegerField(db_column='Country_id', blank=True, null=True)  # Field name made lowercase.
+    history_user = models.ForeignKey(AuthUser, models.DO_NOTHING, blank=True, null=True)
+    metric_id = models.IntegerField(db_column='Metric_id', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'fetchparams_historicalseecaodet'
+
+
+class FetchparamsHistoricalspotdetnew(models.Model):
+    id = models.IntegerField()
+    curvesnameprice = models.CharField(db_column='CurvesNamePrice', max_length=150)  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active')  # Field name made lowercase.
+    tableto = models.CharField(db_column='TableTo', max_length=50)  # Field name made lowercase.
+    insertminutes = models.IntegerField(db_column='InsertMinutes', blank=True, null=True)  # Field name made lowercase.
+    daybefore = models.BooleanField(db_column='DayBefore')  # Field name made lowercase.
+    dayafter = models.BooleanField(db_column='DayAfter')  # Field name made lowercase.
+    history_id = models.AutoField(primary_key=True)
+    history_date = models.DateTimeField()
+    history_change_reason = models.CharField(max_length=100, blank=True, null=True)
+    history_type = models.CharField(max_length=1)
+    country_id = models.IntegerField(db_column='Country_id', blank=True, null=True)  # Field name made lowercase.
+    history_user = models.ForeignKey(AuthUser, models.DO_NOTHING, blank=True, null=True)
+    metric_id = models.IntegerField(db_column='Metric_id', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'fetchparams_historicalspotdetnew'
+
+
+class MetricsHistoricalfieldparam(models.Model):
+    id = models.IntegerField()
+    field_name = models.CharField(db_column='Field_Name', max_length=50)  # Field name made lowercase.
+    field_description = models.CharField(db_column='Field_Description', max_length=250, blank=True, null=True)  # Field name made lowercase.
+    history_id = models.AutoField(primary_key=True)
+    history_date = models.DateTimeField()
+    history_change_reason = models.CharField(max_length=100, blank=True, null=True)
+    history_type = models.CharField(max_length=1)
+    history_user = models.ForeignKey(AuthUser, models.DO_NOTHING, blank=True, null=True)
+    table_id = models.IntegerField(db_column='Table_Id', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'metrics_historicalfieldparam'
+
+
+class MetricsHistoricalmetric(models.Model):
+    id = models.IntegerField()
+    name = models.CharField(db_column='Name', max_length=150)  # Field name made lowercase.
+    abbr = models.CharField(db_column='Abbr', max_length=15)  # Field name made lowercase.
+    uofm_id = models.IntegerField(db_column='UofM_Id', blank=True, null=True)  # Field name made lowercase.
+    comments = models.CharField(db_column='Comments', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    name1 = models.CharField(db_column='Name1', max_length=150)  # Field name made lowercase.
+    typeofmetric = models.IntegerField(db_column='TypeOfMetric', blank=True, null=True)  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active', blank=True, null=True)  # Field name made lowercase.
+    tableto = models.CharField(db_column='TableTo', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    fieldto = models.CharField(db_column='FieldTo', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    history_id = models.AutoField(primary_key=True)
+    history_date = models.DateTimeField()
+    history_change_reason = models.CharField(max_length=100, blank=True, null=True)
+    history_type = models.CharField(max_length=1)
+    fieldto_id = models.IntegerField(db_column='FieldTo_Id', blank=True, null=True)  # Field name made lowercase.
+    history_user = models.ForeignKey(AuthUser, models.DO_NOTHING, blank=True, null=True)
+    metric_category_id = models.IntegerField(db_column='Metric_Category_Id', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'metrics_historicalmetric'
+
+
+class MetricsHistoricalmetriccategory(models.Model):
+    id = models.IntegerField()
+    name = models.CharField(db_column='Name', max_length=50)  # Field name made lowercase.
+    abbr = models.CharField(db_column='Abbr', max_length=10)  # Field name made lowercase.
+    typeofdata = models.IntegerField(db_column='TypeOfData', blank=True, null=True)  # Field name made lowercase.
+    active = models.BooleanField(db_column='Active', blank=True, null=True)  # Field name made lowercase.
+    history_id = models.AutoField(primary_key=True)
+    history_date = models.DateTimeField()
+    history_change_reason = models.CharField(max_length=100, blank=True, null=True)
+    history_type = models.CharField(max_length=1)
+    history_user = models.ForeignKey(AuthUser, models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'metrics_historicalmetriccategory'
+
+
+class MetricsHistoricaltableparam(models.Model):
+    id = models.IntegerField()
+    table_name = models.CharField(db_column='Table_Name', max_length=50)  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=250)  # Field name made lowercase.
+    history_id = models.AutoField(primary_key=True)
+    history_date = models.DateTimeField()
+    history_change_reason = models.CharField(max_length=100, blank=True, null=True)
+    history_type = models.CharField(max_length=1)
+    history_user = models.ForeignKey(AuthUser, models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'metrics_historicaltableparam'
+
+
+class PollsChoice(models.Model):
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField()
+    question = models.ForeignKey('PollsQuestion', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'polls_choice'
+
+
+class PollsQuestion(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'polls_question'
+
+
+class Sysdiagrams(models.Model):
+    name = models.CharField(max_length=128)
+    principal_id = models.IntegerField()
+    diagram_id = models.AutoField(primary_key=True)
+    version = models.IntegerField(blank=True, null=True)
+    definition = models.BinaryField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'sysdiagrams'
+        unique_together = (('principal_id', 'name'),)
