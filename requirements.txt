@@ -97,7 +97,7 @@ transliterate==1.10.2
 tzlocal==2.0.0
 Unidecode==1.1.1
 Unipath==1.1
-urllib3==1.25.8
+urllib3==1.26.5
 vishap==0.1.5
 wapi-python==0.6.0
 whitenoise==5.0.1
